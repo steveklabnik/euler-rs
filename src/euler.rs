@@ -4,18 +4,23 @@ use test::Bencher;
 use test::black_box;
 use std::iter::range_step;
 
+#[cfg(not(test))]
+fn main() {
+    println!("What are you doing here? This program should be tested only!");
+}
+#[cfg(test)]
 fn p1() -> u32 {
-    range(0, 1000u32).fold(0, |a, b| if b % 3 == 0 || b % 5 == 0 { a + b } else { a })
+    range(0, 1_000u32).fold(0, |a, b| if b % 3 == 0 || b % 5 == 0 { a + b } else { a })
 }
 #[test]
 fn test_p1() {
-    assert_eq!(p1(), 233168);
+    assert_eq!(p1(), 233_168);
 }
 #[bench]
-#[ignore]
 fn bench_p1(b: &mut Bencher) {
     b.iter(|| black_box(p1()));
 }
+#[cfg(test)]
 fn p2() -> u32 {
     fn fib(a: u32, b: u32) -> u32 {
         let c = a + b;
@@ -27,15 +32,15 @@ fn p2() -> u32 {
 }
 #[test]
 fn test_p2() {
-    assert_eq!(p2(), 4613732);
+    assert_eq!(p2(), 4_613_732);
 }
 #[bench]
-#[ignore]
 fn bench_p2(b: &mut Bencher) {
     b.iter(|| black_box(p2()));
 }
+#[cfg(test)]
 fn p3() -> u64 {
-    let num = 600851475143u64;
+    let num = 600_851_475_143u64;
     let sqrt = (num as f64).sqrt();
     let size = sqrt as uint;
     let mut sieve = Vec::from_elem(size, true);
@@ -50,19 +55,19 @@ fn p3() -> u64 {
         }
     }
     black_box(&sieve);
-    /*let mut cur = num;
+    let mut cur = num;
     for i in range(2, size) {
         if !sieve.get(i) { continue }
         let val = i as u64;
         if cur % val != 0 { continue }
         if cur == val { return val }
         cur = cur / val
-    }*/
-    0
+    }
+    num
 }
 #[test]
 fn test_p3() {
-    assert_eq!(p3(), 6857);
+    assert_eq!(p3(), 6_857);
 }
 #[bench]
 fn bench_p3(b: &mut Bencher) {
