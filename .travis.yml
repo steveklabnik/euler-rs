@@ -1,9 +1,12 @@
-install:
-  - curl http://www.rust-lang.org/rustup.sh | sudo sh -
+language: rust
 script:
-  - cargo build
-  - cargo test
-  - cargo doc
+  - cargo build --verbose
+  - cargo test --verbose
+  - cargo doc --verbose
 notifications:
   irc:
-    - "irc.fyrechat.net#vana-commits"
+    channels:
+      - "irc.fyrechat.net#vana-commits"
+    template:
+      - "%{repository_slug}/%{branch} (%{commit} - %{author}): %{message}"
+    skip_join: true
